@@ -1,0 +1,84 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'org.asciidoctor.convert' version '1.5.8'
+	id 'java'
+	id 'eclipse'
+}
+
+group = 'com.rabo.loan.management'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('snippetsDir', file("build/generated-snippets"))
+	set('azureVersion', "2.3.1")
+	set('springBootAdminVersion', "2.2.3")
+}
+
+dependencies {
+	compile ("mysql:mysql-connector-java:8.0.21")
+	compile ("commons-dbcp:commons-dbcp:1.4")
+	compile ("io.springfox:springfox-swagger-ui:3.0.0")
+	compile ("io.springfox:springfox-swagger2:2.9.2")
+	compile ("org.hibernate.validator:hibernate-validator:6.1.5.Final")
+	compile ("net.bytebuddy:byte-buddy:1.10.13"){
+			transitive = false
+	}
+	
+	compile ("org.objenesis:objenesis:3.1"){
+			transitive = false
+  	}
+	
+	compile 'org.springframework.boot:spring-boot-starter'
+	compile 'org.springframework.boot:spring-boot-starter-logging'
+	compile 'org.springframework.boot:spring-boot-starter-actuator'
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	
+	//compile 'com.microsoft.azure:azure-active-directory-spring-boot-starter'
+	//compile 'com.microsoft.azure:azure-keyvault-secrets-spring-boot-starter'
+	//compile 'com.microsoft.azure:azure-spring-boot-starter'
+	
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	
+	compile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "com.microsoft.azure:azure-spring-boot-bom:${azureVersion}"
+		mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+	}
+}
+
+test {
+	outputs.dir snippetsDir
+	useJUnitPlatform()
+}
+
+asciidoctor {
+	inputs.dir snippetsDir
+	dependsOn test
+}
+
+eclipse {
+	classpath{
+		containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+		containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5'
+	}
+}
+
+
