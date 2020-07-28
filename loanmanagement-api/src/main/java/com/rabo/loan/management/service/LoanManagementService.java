@@ -1,16 +1,17 @@
 package com.rabo.loan.management.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
-import com.rabo.loan.management.vo.User;
+import com.rabo.loan.management.vo.LoanDetailsRequest;
+import com.rabo.loan.management.vo.UserRequest;
 
 @Service
 public interface LoanManagementService {
-	public User save(User user);
+	public UserRequest save(UserRequest user) throws Exception;
 
-	public List<User> serch(int userId);
+	public UserRequest userLogin(String userName, String password) throws Exception;
 
-	public User userLogin(String userName, String password);
+	public LoanDetailsRequest createLoan(LoanDetailsRequest loanDetails) throws Exception;
+
+	public UserRequest serchLoan(String userName) throws Exception;
 }

@@ -14,15 +14,13 @@ import com.rabo.loan.management.service.impl.LoanManagementServiceImpl;
 @ComponentScan(basePackages = { "com.rabo.loan.management" })
 public class LoanmanagementAppConfig {
 	
-	@Bean
-	public DataSource dataSource() {
-		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/mysql");
-		dataSource.setUsername("root");
-		dataSource.setPassword("pass@word1");
-        return dataSource;
-	}
+	/*
+	 * @Bean public DataSource dataSource() { BasicDataSource dataSource = new
+	 * BasicDataSource(); dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+	 * dataSource.setUrl("jdbc:mysql://localhost:3306/mysql");
+	 * dataSource.setUsername("root"); dataSource.setPassword("pass@word1"); return
+	 * dataSource; }
+	 */
 	
 	@Bean
 	public LoanManagementService loanManagementService() {
